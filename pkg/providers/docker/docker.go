@@ -169,6 +169,10 @@ func (d *DockerTemplateBuilder) GenerateCAPISpecWorkers(clusterSpec *cluster.Spe
 func buildTemplateMapCP(clusterSpec *cluster.Spec) map[string]interface{} {
 	bundle := clusterSpec.VersionsBundle
 
+	apiserverExtraArgs := clusterapi.OIDCToExtraArgs(clusterSpec.OIDCConfig).
+		Append(clusterapi.AwsIamAuthExtraArgs(clusterSpec.AWSIamConfig)).
+		Append(clusterapi.PodIAMAuthExtraArgs(clusterSpec.Spec.PodIAMConfig))
+
 	values := map[string]interface{}{
 		"clusterName":            clusterSpec.Name,
 		"control_plane_replicas": clusterSpec.Spec.ControlPlaneConfiguration.Count,
@@ -179,7 +183,7 @@ func buildTemplateMapCP(clusterSpec *cluster.Spec) map[string]interface{} {
 		"corednsRepository":      bundle.KubeDistro.CoreDNS.Repository,
 		"corednsVersion":         bundle.KubeDistro.CoreDNS.Tag,
 		"kindNodeImage":          bundle.EksD.KindNode.VersionedImage(),
-		"apiserverExtraArgs":     clusterapi.OIDCToExtraArgs(clusterSpec.OIDCConfig).Append(clusterapi.AwsIamAuthExtraArgs(clusterSpec.AWSIamConfig)).ToPartialYaml(),
+		"apiserverExtraArgs":     apiserverExtraArgs.ToPartialYaml(),
 		"externalEtcdVersion":    bundle.KubeDistro.EtcdVersion,
 		"eksaSystemNamespace":    constants.EksaSystemNamespace,
 		"auditPolicy":            common.GetAuditPolicy(),
