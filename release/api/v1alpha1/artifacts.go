@@ -1,50 +1,53 @@
 package v1alpha1
 
-func (vb *VersionsBundle) Manifests() map[string][]Manifest {
-	return map[string][]Manifest{
+func (vb *VersionsBundle) Manifests() map[string][]*Manifest {
+	return map[string][]*Manifest{
 		"cluster-api-provider-aws": {
-			vb.Aws.Components,
-			vb.Aws.ClusterTemplate,
-			vb.Aws.Metadata,
+			&vb.Aws.Components,
+			&vb.Aws.ClusterTemplate,
+			&vb.Aws.Metadata,
 		},
 		"core-cluster-api": {
-			vb.ClusterAPI.Components,
-			vb.ClusterAPI.Metadata,
+			&vb.ClusterAPI.Components,
+			&vb.ClusterAPI.Metadata,
 		},
 		"capi-kubeadm-bootstrap": {
-			vb.Bootstrap.Components,
-			vb.Bootstrap.Metadata,
+			&vb.Bootstrap.Components,
+			&vb.Bootstrap.Metadata,
 		},
 		"capi-kubeadm-control-plane": {
-			vb.ControlPlane.Components,
-			vb.ControlPlane.Metadata,
+			&vb.ControlPlane.Components,
+			&vb.ControlPlane.Metadata,
+		},
+		"cert-manager": {
+			&vb.CertManager.Manifest,
 		},
 		"cluster-api-provider-docker": {
-			vb.Docker.Components,
-			vb.Docker.ClusterTemplate,
-			vb.Docker.Metadata,
+			&vb.Docker.Components,
+			&vb.Docker.ClusterTemplate,
+			&vb.Docker.Metadata,
 		},
 		"cluster-api-provider-vsphere": {
-			vb.VSphere.Components,
-			vb.VSphere.ClusterTemplate,
-			vb.VSphere.Metadata,
+			&vb.VSphere.Components,
+			&vb.VSphere.ClusterTemplate,
+			&vb.VSphere.Metadata,
 		},
 		"cilium": {
-			vb.Cilium.Manifest,
+			&vb.Cilium.Manifest,
 		},
 		"kindnetd": {
-			vb.Kindnetd.Manifest,
+			&vb.Kindnetd.Manifest,
 		},
 		"eks-anywhere-cluster-controller": {
-			vb.Eksa.Components,
+			&vb.Eksa.Components,
 		},
 		"etcdadm-bootstrap-provider": {
-			vb.ExternalEtcdBootstrap.Components,
-			vb.ExternalEtcdBootstrap.Metadata,
+			&vb.ExternalEtcdBootstrap.Components,
+			&vb.ExternalEtcdBootstrap.Metadata,
 		},
 		"etcdadm-controller": {
-			vb.ExternalEtcdController.Components,
-			vb.ExternalEtcdController.Metadata,
+			&vb.ExternalEtcdController.Components,
+			&vb.ExternalEtcdController.Metadata,
 		},
 	}
 }
