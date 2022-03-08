@@ -47,7 +47,7 @@ func NewClusterGenerate(clusterName string, opts ...ClusterGenerateOpt) *Cluster
 				Services: Services{
 					CidrBlocks: []string{"10.96.0.0/12"},
 				},
-				CNI: Cilium,
+				CNI: &CNI{Cilium: &CiliumConfig{}},
 			},
 		},
 	}
@@ -384,12 +384,12 @@ func validateNetworking(clusterConfig *Cluster) error {
 	if err != nil {
 		return fmt.Errorf("invalid CIDR block for Services: %s. Please specify a valid CIDR block for service subnet", clusterConfig.Spec.ClusterNetwork.Services)
 	}
-	if clusterConfig.Spec.ClusterNetwork.CNI == "" {
+	if clusterConfig.Spec.ClusterNetwork.CNI == nil {
 		return errors.New("cni not specified or empty")
 	}
-	if _, ok := validCNIs[clusterConfig.Spec.ClusterNetwork.CNI]; !ok {
-		return fmt.Errorf("cni %s not supported", clusterConfig.Spec.ClusterNetwork.CNI)
-	}
+	//if _, ok := validCNIs[clusterConfig.Spec.ClusterNetwork.CNI]; !ok {
+	//	return fmt.Errorf("cni %s not supported", clusterConfig.Spec.ClusterNetwork.CNI)
+	//}
 	return nil
 }
 

@@ -1,8 +1,11 @@
 package kindnetd
 
 import (
+	"context"
 	"errors"
 	"fmt"
+	"github.com/aws/eks-anywhere/pkg/providers"
+	"github.com/aws/eks-anywhere/pkg/types"
 	"strings"
 
 	appsv1 "k8s.io/api/apps/v1"
@@ -25,7 +28,7 @@ func NewKindnetd(client Client) *Kindnetd {
 	}
 }
 
-func (c *Kindnetd) GenerateManifest(clusterSpec *cluster.Spec) ([]byte, error) {
+func (c *Kindnetd) GenerateManifest(ctx context.Context, managementCluster, workloadCluster *types.Cluster, clusterSpec *cluster.Spec, provider providers.Provider) ([]byte, error) {
 	return generateManifest(clusterSpec)
 }
 

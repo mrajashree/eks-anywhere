@@ -87,7 +87,7 @@ type ClusterClient interface {
 }
 
 type Networking interface {
-	GenerateManifest(clusterSpec *cluster.Spec) ([]byte, error)
+	GenerateManifest(ctx context.Context, managementCluster, workloadCluster *types.Cluster, clusterSpec *cluster.Spec, provider providers.Provider) ([]byte, error)
 	Upgrade(ctx context.Context, cluster *types.Cluster, currentSpec, newSpec *cluster.Spec) (*types.ChangeDiff, error)
 }
 
@@ -531,14 +531,14 @@ func (c *ClusterManager) waitForCAPI(ctx context.Context, cluster *types.Cluster
 	return nil
 }
 
-func (c *ClusterManager) InstallNetworking(ctx context.Context, cluster *types.Cluster, clusterSpec *cluster.Spec) error {
-	networkingManifestContent, err := c.networking.GenerateManifest(clusterSpec)
+func (c *ClusterManager) InstallNetworking(ctx context.Context, managementCluster, workloadCluster *types.Cluster, clusterSpec *cluster.Spec, provider providers.Provider) error {
+	networkingManifestContent, err := c.networking.GenerateManifest(ctx, managementCluster, workloadCluster, clusterSpec, provider)
 	if err != nil {
 		return fmt.Errorf("error generating networking manifest: %v", err)
 	}
 	err = c.Retrier.Retry(
 		func() error {
-			return c.clusterClient.ApplyKubeSpecFromBytes(ctx, cluster, networkingManifestContent)
+			return c.clusterClient.ApplyKubeSpecFromBytes(ctx, workloadCluster, networkingManifestContent)
 		},
 	)
 	if err != nil {

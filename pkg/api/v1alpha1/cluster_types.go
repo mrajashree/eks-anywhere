@@ -259,8 +259,8 @@ type ClusterNetwork struct {
 	Pods     Pods     `json:"pods,omitempty"`
 	Services Services `json:"services,omitempty"`
 	// CNI specifies the CNI plugin to be installed in the cluster
-	CNI CNI `json:"cni,omitempty"`
-	DNS DNS `json:"dns,omitempty"`
+	CNI *CNI `json:"cni,omitempty"`
+	DNS DNS  `json:"dns,omitempty"`
 }
 
 func (n *ClusterNetwork) Equal(o *ClusterNetwork) bool {
@@ -354,18 +354,29 @@ const (
 	Kube121 KubernetesVersion = "1.21"
 )
 
-type CNI string
-
-const (
-	Cilium           CNI = "cilium"
-	CiliumEnterprise CNI = "cilium-enterprise"
-	Kindnetd         CNI = "kindnetd"
-)
-
-var validCNIs = map[CNI]struct{}{
-	Cilium:   {},
-	Kindnetd: {},
+type CNI struct {
+	Cilium           *CiliumConfig           `json:"cilium,omitempty"`
+	CiliumEnterprise *CiliumEnterpriseConfig `json:"ciliumEnterpriseConfig,omitempty"`
+	Kindnetd         *KindnetdConfig         `json:"kindnetd,omitempty"`
 }
+
+type CiliumConfig struct {
+	PolicyEnforcementMode string `json:"policyEnforcementMode,omitempty"`
+}
+
+type CiliumEnterpriseConfig struct{}
+type KindnetdConfig struct{}
+
+//const (
+//	Cilium           CNI = "cilium"
+//	CiliumEnterprise CNI = "cilium-enterprise"
+//	Kindnetd         CNI = "kindnetd"
+//)
+//
+//var validCNIs = map[CNI]struct{}{
+//	Cilium:   {},
+//	Kindnetd: {},
+//}
 
 // ClusterStatus defines the observed state of Cluster
 type ClusterStatus struct {

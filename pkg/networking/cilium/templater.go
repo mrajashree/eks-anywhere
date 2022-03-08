@@ -117,6 +117,7 @@ func templateValues(spec *cluster.Spec) values {
 				"enabled": true,
 			},
 		},
+		"policyEnforcementMode": spec.Spec.ClusterNetwork.CNI.Cilium.PolicyEnforcementMode,
 	}
 }
 
