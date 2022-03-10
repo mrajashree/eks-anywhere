@@ -1689,6 +1689,56 @@ func TestClusterNetworkEquals(t *testing.T) {
 				CNIConfig: &CNIConfig{Cilium: &CiliumConfig{PolicyEnforcementMode: "default"}},
 			},
 		},
+		{
+			name: "previous == new, same cni, diff format",
+			want: true,
+			prev: &ClusterNetwork{
+				CNI: Cilium,
+			},
+			new: &ClusterNetwork{
+				CNIConfig: &CNIConfig{Cilium: &CiliumConfig{}},
+			},
+		},
+		{
+			name: "previous != new, different cni, different format",
+			want: false,
+			prev: &ClusterNetwork{
+				CNI: Kindnetd,
+			},
+			new: &ClusterNetwork{
+				CNIConfig: &CNIConfig{Cilium: &CiliumConfig{}},
+			},
+		},
+		{
+			name: "previous != new, new cniConfig format, diff cni",
+			want: false,
+			prev: &ClusterNetwork{
+				CNIConfig: &CNIConfig{Cilium: &CiliumConfig{}},
+			},
+			new: &ClusterNetwork{
+				CNIConfig: &CNIConfig{Kindnetd: &KindnetdConfig{}},
+			},
+		},
+		{
+			name: "previous == new, new cniConfig format, same cni",
+			want: true,
+			prev: &ClusterNetwork{
+				CNIConfig: &CNIConfig{Cilium: &CiliumConfig{}},
+			},
+			new: &ClusterNetwork{
+				CNIConfig: &CNIConfig{Cilium: &CiliumConfig{}},
+			},
+		},
+		{
+			name: "previous != new, new cniConfig format, same cilium cni, diff configuration",
+			want: false,
+			prev: &ClusterNetwork{
+				CNIConfig: &CNIConfig{Cilium: &CiliumConfig{PolicyEnforcementMode: "always"}},
+			},
+			new: &ClusterNetwork{
+				CNIConfig: &CNIConfig{Cilium: &CiliumConfig{PolicyEnforcementMode: "default"}},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
