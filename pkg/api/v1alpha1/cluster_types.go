@@ -534,6 +534,12 @@ type CiliumConfig struct {
 	PolicyEnforcementMode string `json:"policyEnforcementMode,omitempty"`
 }
 
+var validCiliumPolicyEnforcementModes = map[string]bool{
+	"always":  true,
+	"default": true,
+	"never":   true,
+}
+
 type KindnetdConfig struct{}
 
 const (

@@ -459,6 +459,9 @@ func validateCNIConfig(cniConfig *CNIConfig) error {
 
 	if cniConfig.Cilium != nil {
 		cniPluginSpecified++
+		if err := validateCiliumConfig(cniConfig.Cilium); err != nil {
+			return err
+		}
 	}
 
 	if cniConfig.Kindnetd != nil {
@@ -470,7 +473,16 @@ func validateCNIConfig(cniConfig *CNIConfig) error {
 	} else if cniPluginSpecified > 1 {
 		return fmt.Errorf("cannot specify more than one cni plugins")
 	}
+	return nil
+}
 
+func validateCiliumConfig(cilium *CiliumConfig) error {
+	if cilium.PolicyEnforcementMode == "" {
+		return nil
+	}
+	if !validCiliumPolicyEnforcementModes[cilium.PolicyEnforcementMode] {
+		return fmt.Errorf("cilium policyEnforcementMode %s not supported", cilium.PolicyEnforcementMode)
+	}
 	return nil
 }
 

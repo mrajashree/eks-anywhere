@@ -1908,6 +1908,28 @@ func TestValidateCNIConfig(t *testing.T) {
 				},
 			},
 		},
+		{
+			name:    "invalid cilium policy enforcement mode",
+			wantErr: fmt.Errorf("cilium policyEnforcementMode invalid not supported"),
+			clusterNetwork: &ClusterNetwork{
+				CNIConfig: &CNIConfig{
+					Cilium: &CiliumConfig{
+						PolicyEnforcementMode: "invalid",
+					},
+				},
+			},
+		},
+		{
+			name:    "valid cilium policy enforcement mode",
+			wantErr: nil,
+			clusterNetwork: &ClusterNetwork{
+				CNIConfig: &CNIConfig{
+					Cilium: &CiliumConfig{
+						PolicyEnforcementMode: "default",
+					},
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
