@@ -137,6 +137,13 @@ func (cc *createClusterOptions) createCluster(cmd *cobra.Command, _ []string) er
 	}
 	defer cleanup(ctx, deps, &err)
 
+	if clusterSpec.VersionsBundle.Cilium.HelmChart.Image() != "public.ecr.aws/isovalent/cilium" {
+		chart := clusterSpec.VersionsBundle.Cilium.HelmChart
+		if err := deps.Helm.PullChart(ctx, fmt.Sprintf("%s%s", ociPrefix, chart.Image()), chart.Tag()); err != nil {
+			return err
+		}
+	}
+
 	if !features.IsActive(features.TinkerbellProvider()) && deps.Provider.Name() == constants.TinkerbellProviderName {
 		return fmt.Errorf("provider tinkerbell is not supported in this release")
 	}
