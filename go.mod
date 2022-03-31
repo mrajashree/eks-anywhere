@@ -8,8 +8,8 @@ require (
 	github.com/aws/eks-anywhere/release v0.0.0-20211130194657-f6e9593c6551
 	github.com/aws/eks-distro-build-tooling/release v0.0.0-20211103003257-a7e2379eae5e
 	github.com/go-git/go-git/v5 v5.4.2
-	github.com/go-logr/logr v0.4.0
-	github.com/go-logr/zapr v0.4.0
+	github.com/go-logr/logr v1.2.0
+	github.com/go-logr/zapr v1.2.0
 	github.com/gocarina/gocsv v0.0.0-20220304222734-caabc5f00d30
 	github.com/golang/mock v1.6.0
 	github.com/google/go-github/v35 v35.3.0
@@ -24,19 +24,19 @@ require (
 	github.com/tinkerbell/cluster-api-provider-tinkerbell v0.1.0
 	github.com/tinkerbell/pbnj v0.0.0-20211027151347-2fb19ffbe7ad
 	github.com/tinkerbell/tink v0.6.0
-	go.uber.org/zap v1.19.0
+	go.uber.org/zap v1.19.1
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
-	golang.org/x/oauth2 v0.0.0-20210819190943-2bc19b11175f
-	golang.org/x/sys v0.0.0-20210823070655-63515b42dcdf
+	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
+	golang.org/x/sys v0.0.0-20211029165221-6e7872819dc8
 	gopkg.in/ini.v1 v1.63.2
 	gopkg.in/square/go-jose.v2 v2.6.0
-	k8s.io/api v0.22.2
-	k8s.io/apimachinery v0.22.2
-	k8s.io/client-go v0.22.2
-	sigs.k8s.io/cluster-api v1.0.2
-	sigs.k8s.io/cluster-api-provider-vsphere v1.0.1
-	sigs.k8s.io/cluster-api/test v1.0.0
-	sigs.k8s.io/controller-runtime v0.10.3
+	k8s.io/api v0.23.0
+	k8s.io/apimachinery v0.23.0
+	k8s.io/client-go v0.23.0
+	sigs.k8s.io/cluster-api v1.1.0
+	sigs.k8s.io/cluster-api-provider-vsphere v1.1.1
+	sigs.k8s.io/cluster-api/test v1.1.0
+	sigs.k8s.io/controller-runtime v0.11.0
 	sigs.k8s.io/yaml v1.3.0
 )
 

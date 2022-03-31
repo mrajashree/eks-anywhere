@@ -15,7 +15,7 @@ import (
 	v1 "k8s.io/api/core/v1"
 	unstructured "k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	types "k8s.io/apimachinery/pkg/types"
-	v1beta10 "sigs.k8s.io/cluster-api-provider-vsphere/api/v1beta1"
+	v1beta10 "sigs.k8s.io/cluster-api-provider-vsphere/apis/v1beta1"
 	v1beta11 "sigs.k8s.io/cluster-api/api/v1beta1"
 	v1beta12 "sigs.k8s.io/cluster-api/bootstrap/kubeadm/api/v1beta1"
 	v1beta13 "sigs.k8s.io/cluster-api/controlplane/kubeadm/api/v1beta1"
